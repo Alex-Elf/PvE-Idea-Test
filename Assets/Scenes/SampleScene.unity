@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 483166312}
   - component: {fileID: 483166317}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fb36b7912e9a24cac1dfd80347fde5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   speed: 6
+  canRotate: 1
+  inversedRotation: 0
   turnSpeed: 10
 --- !u!23 &483166313
 MeshRenderer:
@@ -433,7 +436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74830ed2c2ee159448eb966326932dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 483166315}
+  CameraSpeed: 10
 --- !u!1 &1477793204
 GameObject:
   m_ObjectHideFlags: 0
