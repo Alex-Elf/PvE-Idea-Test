@@ -26,6 +26,8 @@ public class UserInput : MonoBehaviour
 
 
 
+	private Vector3 v3up = Vector3.up, v3zero = Vector3.zero;
+	private readonly Vector2 v2zero = Vector2.zero;
 
 	private void OnEnable()
 	{
@@ -38,8 +40,8 @@ public class UserInput : MonoBehaviour
 	}
 	private void Awake()
 	{
-		InputActions.Gameplay.Movement.performed += ctx => MovementCallback(ctx);
 		InputActions.Gameplay.Run.performed += ctx => RunPressedCallback(ctx);
+		InputActions.Gameplay.MousePos.performed += ctx => MouseMovementCallback(ctx);
 	}
 
 	private void Start()
@@ -51,29 +53,45 @@ public class UserInput : MonoBehaviour
 	{
 		runIsPressed = ctx.ReadValue<float>() != 0;
 	}
-
-	public void MovementCallback(InputAction.CallbackContext ctx)
+	public void MouseMovementCallback(InputAction.CallbackContext ctx)
 	{
-		controller.Move(ctx.ReadValue<Vector2>(), runIsPressed);
+		//Vector3 mousePos = InputActions.Gameplay.MousePos.ReadValue<Vector2>();
+		Vector3 mousePos = ctx.ReadValue<Vector2>();
+
+		Ray cameraRay = Camera.main.ScreenPointToRay(mousePos);
+
+		Vector3 pointOnPlane;
+		var horizontalPlane = new Plane(v3up, v3zero);
+		if (RayPlaneIntersection(cameraRay, horizontalPlane, out pointOnPlane))
+		{
+			Vector3 forward = pointOnPlane - transform.position;
+			controller.LookAt(forward);
+		}
+		
 	}
 
 	private void Update()
 	{
-
-		Vector3 mousePos = InputActions.Gameplay.MousePos.ReadValue<Vector2>();
-		if (mousePos != lastMousePos)
+		Vector2 movementInput = InputActions.Gameplay.Movement.ReadValue<Vector2>();
+		if(movementInput != v2zero)
 		{
-			lastMousePos = mousePos;
-			Ray cameraRay = Camera.main.ScreenPointToRay(mousePos);
-
-			Vector3 pointOnPlane;
-			var horizontalPlane = new Plane(Vector3.up, Vector3.zero);
-			if (RayPlaneIntersection(cameraRay, horizontalPlane, out pointOnPlane))
-			{
-				Vector3 forward = pointOnPlane - transform.position;
-				controller.LookAt(forward);
-			}
+			controller.Move(movementInput, runIsPressed);
 		}
+
+		//Vector3 mousePos = InputActions.Gameplay.MousePos.ReadValue<Vector2>();
+		//if (mousePos != lastMousePos)
+		//{
+		//	lastMousePos = mousePos;
+		//	Ray cameraRay = Camera.main.ScreenPointToRay(mousePos);
+
+		//	Vector3 pointOnPlane;
+		//	var horizontalPlane = new Plane(v3up, v3zero);
+		//	if (RayPlaneIntersection(cameraRay, horizontalPlane, out pointOnPlane))
+		//	{
+		//		Vector3 forward = pointOnPlane - transform.position;
+		//		controller.LookAt(forward);
+		//	}
+		//}
 	}
 
 	private void OldInput()

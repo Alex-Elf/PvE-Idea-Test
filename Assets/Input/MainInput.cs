@@ -41,6 +41,14 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AttackMain"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa78951f-257b-4c66-889b-8b4b3a775288"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -120,6 +128,17 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""813e976a-2015-4dba-a4fb-a8f1d5d78c48"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackMain"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -148,6 +167,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_MousePos = m_Gameplay.FindAction("MousePos", throwIfNotFound: true);
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
+        m_Gameplay_AttackMain = m_Gameplay.FindAction("AttackMain", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,6 +220,7 @@ public class @MainInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_MousePos;
     private readonly InputAction m_Gameplay_Run;
+    private readonly InputAction m_Gameplay_AttackMain;
     public struct GameplayActions
     {
         private @MainInput m_Wrapper;
@@ -207,6 +228,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @MousePos => m_Wrapper.m_Gameplay_MousePos;
         public InputAction @Run => m_Wrapper.m_Gameplay_Run;
+        public InputAction @AttackMain => m_Wrapper.m_Gameplay_AttackMain;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -225,6 +247,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Run.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @AttackMain.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackMain;
+                @AttackMain.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackMain;
+                @AttackMain.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackMain;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -238,6 +263,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @AttackMain.started += instance.OnAttackMain;
+                @AttackMain.performed += instance.OnAttackMain;
+                @AttackMain.canceled += instance.OnAttackMain;
             }
         }
     }
@@ -256,5 +284,6 @@ public class @MainInput : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnAttackMain(InputAction.CallbackContext context);
     }
 }

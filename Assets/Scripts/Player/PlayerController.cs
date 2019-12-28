@@ -6,12 +6,20 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("Movement")]
 	public bool canMove = true;
+	public bool inversedMovement = false;
 	public float speed = 6.0f;
 
 	[Header("Look")]
 	public bool canRotate = true;
-	public bool inversedRotation = false;
+	public bool mirroredRotation = false;
 	public float turnSpeed = 3.0f;
+
+	[Header("Attack")]
+	public bool canAttack = true;
+	public WeaponStats rightHandWeaponStats;
+	public Transform rightHandWeaponPos;
+
+	private Weapon rightArmWeapon;
 
 
 	private CharacterController charController;
@@ -23,6 +31,11 @@ public class PlayerController : MonoBehaviour
 	{
 		charController = GetComponent<CharacterController>();
 		targetForward = transform.forward;
+		if (rightHandWeaponStats != null)
+		{
+			rightArmWeapon = Instantiate(rightHandWeaponStats.prefab, rightHandWeaponPos).GetComponent<Weapon>();
+		}
+
 	}
 	private void Update()
 	{
@@ -39,7 +52,7 @@ public class PlayerController : MonoBehaviour
 	{
 		forward.y = 0;
 		forward.Normalize();
-		forward = (inversedRotation)? Vector3.Reflect(-forward, Vector3.forward): forward;		targetForward = forward;
+		forward = (mirroredRotation)? Vector3.Reflect(-forward, Vector3.forward): forward;		targetForward = forward;
 	}
 
 	public void Move(Vector2 movementHorisontal, bool run)
@@ -49,6 +62,10 @@ public class PlayerController : MonoBehaviour
 			Vector3 movement = new Vector3(movementHorisontal.x, 0, movementHorisontal.y);
 
 			movement *= speed;
+			if (inversedMovement)
+			{
+				movement = -movement;
+			}
 
 			movement = Vector3.ClampMagnitude(movement, speed);
 			movement *= Time.deltaTime;
