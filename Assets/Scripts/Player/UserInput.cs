@@ -42,11 +42,17 @@ public class UserInput : MonoBehaviour
 	{
 		InputActions.Gameplay.Run.performed += ctx => RunPressedCallback(ctx);
 		InputActions.Gameplay.MousePos.performed += ctx => MouseMovementCallback(ctx);
+		InputActions.Gameplay.AttackMain.performed += ctx => AttackMainCallback(ctx);
 	}
 
 	private void Start()
 	{
 		controller = GetComponent<PlayerController>();
+	}
+
+	public void AttackMainCallback(InputAction.CallbackContext ctx)
+	{
+		controller.AttackMain(ctx.ReadValue<float>() != 0);
 	}
 
 	public void RunPressedCallback(InputAction.CallbackContext ctx)

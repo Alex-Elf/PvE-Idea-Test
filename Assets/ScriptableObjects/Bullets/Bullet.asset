@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 497947068840805324, guid: faf42f24552b3bb47b805ba1afeb3701, type: 3}
   hitEffectPrefab: {fileID: 0}
+  bulletSpeed: 20

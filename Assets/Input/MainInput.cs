@@ -133,9 +133,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""813e976a-2015-4dba-a4fb-a8f1d5d78c48"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""keyboard-mouse"",
                     ""action"": ""AttackMain"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

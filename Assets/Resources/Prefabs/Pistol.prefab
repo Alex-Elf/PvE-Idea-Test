@@ -125,8 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a39d98756170c4faaed004e9713822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCurrent: 0
+  ammoMagazineCurrent: 0
+  ammoMagazineMax: 0
   ammoTotal: 0
+  ammoTotalMax: 0
   stats: {fileID: 11400000, guid: a59d0f331ef49bb4f93741f10803c1a2, type: 2}
   instantiatePos: {fileID: 2910979374495640714}
   aSource: {fileID: 8460108764583206390}
@@ -237,7 +239,6 @@ GameObject:
   - component: {fileID: 2910979373551999382}
   - component: {fileID: 2910979373551999371}
   - component: {fileID: 2910979373551999368}
-  - component: {fileID: 2910979373551999369}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -305,19 +306,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2910979373551999369
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2910979373551999383}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2910979374495640715
 GameObject:
   m_ObjectHideFlags: 0

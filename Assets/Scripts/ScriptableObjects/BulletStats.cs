@@ -7,4 +7,6 @@ public class BulletStats : ScriptableObject
 {
 	public GameObject prefab;
 	public GameObject hitEffectPrefab;
+
+	public float bulletSpeed;
 }

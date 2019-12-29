@@ -16,10 +16,12 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Attack")]
 	public bool canAttack = true;
-	public WeaponStats rightHandWeaponStats;
-	public Transform rightHandWeaponPos;
 
-	private Weapon rightArmWeapon;
+	public WeaponStats mainWeaponStats;
+	private Weapon mainArmWeapon;
+
+	public Transform rightHandWeaponPos;
+	public Transform leftHandWeaponPos;
 
 
 	private CharacterController charController;
@@ -31,9 +33,10 @@ public class PlayerController : MonoBehaviour
 	{
 		charController = GetComponent<CharacterController>();
 		targetForward = transform.forward;
-		if (rightHandWeaponStats != null)
+
+		if (mainWeaponStats != null)
 		{
-			rightArmWeapon = Instantiate(rightHandWeaponStats.prefab, rightHandWeaponPos).GetComponent<Weapon>();
+			mainArmWeapon = Instantiate(mainWeaponStats.prefab, rightHandWeaponPos).GetComponent<Weapon>();
 		}
 
 	}
@@ -70,8 +73,21 @@ public class PlayerController : MonoBehaviour
 			movement = Vector3.ClampMagnitude(movement, speed);
 			movement *= Time.deltaTime;
 			charController.Move(movement);
-
 		}
-
+	}
+	
+	public void AttackMain(bool attack)
+	{
+		if (mainArmWeapon != null)
+		{
+			if (attack)
+			{
+				mainArmWeapon.StartAttacking();
+			}
+			else
+			{
+				mainArmWeapon.StopAttacking();
+			}
+		}
 	}
 }
