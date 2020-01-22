@@ -19,9 +19,14 @@ public class PrefabSingleton<T> : MonoBehaviour where T : PrefabSingleton<T>
 					else
 						instance = Instantiate(prefab);
 				}
-				DontDestroyOnLoad(instance.gameObject);
 			}
 			return instance;
 		}
+	}
+	[SerializeField] private bool isPersistent;
+	private void Awake()
+	{
+		if(isPersistent)
+			DontDestroyOnLoad(instance.gameObject);
 	}
 }
