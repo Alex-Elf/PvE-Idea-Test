@@ -7,10 +7,11 @@ public class Bullet : MonoBehaviour
 	public new Rigidbody rigidbody;
 
 	[SerializeField] private BulletStats bulletStats;
-
+	[SerializeField] private BackToPool backToPool;
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Destroy(gameObject);
+		gameObject.SetActive(false);
+		backToPool.ReturnToPool();
 	}
 }

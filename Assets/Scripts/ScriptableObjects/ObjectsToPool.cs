@@ -9,10 +9,9 @@ public class ObjectsToPool : ScriptableObject
 	public class PoolObj
 	{
 		public string name;
-		public GameObject prefab;
+		public BackToPool prefab;
 		public int maxAmount;
 		public bool canExpand;
 	}
-
 	public PoolObj[] objectsToPool;
 }

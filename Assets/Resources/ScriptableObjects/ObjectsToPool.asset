@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ObjectsToPool
   m_EditorClassIdentifier: 
   objectsToPool:
-  - name: omegaLul
-    prefab: {fileID: 497947068840805324, guid: faf42f24552b3bb47b805ba1afeb3701, type: 3}
-    maxAmount: 20
+  - name: omegalul
+    prefab: {fileID: -4393676933715568658, guid: faf42f24552b3bb47b805ba1afeb3701,
+      type: 3}
+    maxAmount: 50
     canExpand: 1

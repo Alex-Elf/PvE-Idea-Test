@@ -27,6 +27,11 @@ public class Weapon : MonoBehaviour
 		ammoMagazineMax = stats.ammoMagazineMax;
 		ammoTotal = stats.ammoTotal;
 		ammoTotalMax = stats.ammoTotalMax;
+
+		if(!ObjectPooler.Instance)
+		{
+			Debug.LogError("ObjectPooler not found");
+		}
 	}
 
 	private IEnumerator Attack()
@@ -47,7 +52,8 @@ public class Weapon : MonoBehaviour
 
 	private void AttackOnce()
 	{
-		var bullet = Instantiate(stats.bullet.prefab).GetComponent<Bullet>();
+		var bullet = ObjectPooler.Instance.GetFromPool(stats.bullet.prefab.GetInstanceID().ToString()).GetComponent<Bullet>();
+		bullet.gameObject.SetActive(true);
 		bullet.transform.position = instantiatePos.position;
 		bullet.rigidbody.AddForce(transform.forward * stats.bullet.bulletSpeed, ForceMode.VelocityChange);
 
