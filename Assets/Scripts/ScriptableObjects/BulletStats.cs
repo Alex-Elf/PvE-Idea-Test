@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BulletStats", menuName = "Scriptable object/BulletStats", order = 51)]
 public class BulletStats : ScriptableObject
 {
-	public GameObject prefab;
+	public Bullet prefab;
 	public GameObject hitEffectPrefab;
 
 	public float bulletSpeed;

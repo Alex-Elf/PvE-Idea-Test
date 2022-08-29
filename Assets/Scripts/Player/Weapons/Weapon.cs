@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using LocalObjectPooler;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#pragma warning disable 0649
 public class Weapon : MonoBehaviour
 {
 	public short ammoMagazineCurrent;
@@ -18,8 +18,16 @@ public class Weapon : MonoBehaviour
 
 	private IEnumerator attackResult;
 	private WaitForSeconds shotDelay;
+
+	private ComponentObjectPooler<Bullet> bulletPool;
+
 	private void Awake()
 	{
+		var bulletsPoolContainer = new GameObject("bullets pool");
+		bulletsPoolContainer.transform.SetParent(transform);
+		bulletsPoolContainer.SetActive(false);
+		bulletPool = new(stats.bullet.prefab, bulletsPoolContainer.transform);
+
 		attackResult = Attack();
 		shotDelay = new WaitForSeconds(stats.shotDelay);
 
@@ -28,10 +36,6 @@ public class Weapon : MonoBehaviour
 		ammoTotal = stats.ammoTotal;
 		ammoTotalMax = stats.ammoTotalMax;
 
-		if(!ObjectPooler.Instance)
-		{
-			Debug.LogError("ObjectPooler not found");
-		}
 	}
 
 	private IEnumerator Attack()
@@ -52,7 +56,9 @@ public class Weapon : MonoBehaviour
 
 	private void AttackOnce()
 	{
-		var bullet = ObjectPooler.Instance.GetFromPool(stats.bullet.prefab.GetInstanceID().ToString()).GetComponent<Bullet>();
+		var bullet = bulletPool.GetFreeObject();
+		bullet.Setup(bulletPool, stats.bullet);
+		bullet.transform.SetParent(null);
 		bullet.gameObject.SetActive(true);
 		bullet.transform.position = instantiatePos.position;
 		bullet.rigidbody.AddForce(transform.forward * stats.bullet.bulletSpeed, ForceMode.VelocityChange);
