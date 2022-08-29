@@ -40,9 +40,9 @@ public class UserInput : MonoBehaviour
 	}
 	private void Awake()
 	{
-		InputActions.Gameplay.Run.performed += ctx => RunPressedCallback(ctx);
-		InputActions.Gameplay.MousePos.performed += ctx => MouseMovementCallback(ctx);
-		InputActions.Gameplay.AttackMain.performed += ctx => AttackMainCallback(ctx);
+		InputActions.Gameplay.Run.performed += RunPressedCallback;
+		InputActions.Gameplay.MousePos.performed += MouseMovementCallback;
+		InputActions.Gameplay.AttackMain.performed += AttackMainCallback;
 	}
 
 	private void Start()

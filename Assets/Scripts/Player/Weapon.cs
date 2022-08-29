@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
 
 	private IEnumerator Attack()
 	{
-		while(Time.timeSinceLevelLoad - lastShotTime < stats.shotDelay)
+		while(Time.time - lastShotTime < stats.shotDelay)
 		{
 			yield return null;
 		}
@@ -60,7 +60,7 @@ public class Weapon : MonoBehaviour
 		ammoMagazineCurrent = (ammoMagazineCurrent > 0) ? ammoMagazineCurrent-- : ammoMagazineCurrent;
 		ammoTotal = (ammoTotal > 0) ? ammoTotal-- : ammoTotal;
 		aSource.PlayOneShot(stats.attackSound);
-		lastShotTime = Time.timeSinceLevelLoad;
+		lastShotTime = Time.time;
 	}
 
 	public void StartAttacking()

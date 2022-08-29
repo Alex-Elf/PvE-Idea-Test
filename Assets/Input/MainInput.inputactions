@@ -11,15 +11,17 @@
                     "id": "47034848-04ff-4f37-88b6-acc8aea9ca0d",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MousePos",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "551cbdfc-8b33-47ea-82fa-5a29d908e909",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Run",
@@ -27,7 +29,8 @@
                     "id": "e79dbe23-43a7-4393-8e3e-6a8451b1f576",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "AttackMain",
@@ -35,7 +38,8 @@
                     "id": "fa78951f-257b-4c66-889b-8b4b3a775288",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
