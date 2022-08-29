@@ -10,26 +10,22 @@ public class Weapon : MonoBehaviour
 	public short ammoTotal;
 	public short ammoTotalMax;
 
-	[SerializeField] private WeaponStats stats;
+    [SerializeField] private WeaponStats stats;
 	[SerializeField] private Transform instantiatePos;
-	[SerializeField] private AudioSource aSource;
 
+	internal SoundManager soundManager;
 	private float lastShotTime;
 
-	private IEnumerator attackResult;
-	private WaitForSeconds shotDelay;
-
 	private ComponentObjectPooler<Bullet> bulletPool;
+    private Coroutine attackRoutine;
 
-	private void Awake()
+    private void Awake()
 	{
 		var bulletsPoolContainer = new GameObject("bullets pool");
 		bulletsPoolContainer.transform.SetParent(transform);
 		bulletsPoolContainer.SetActive(false);
 		bulletPool = new(stats.bullet.prefab, bulletsPoolContainer.transform);
 
-		attackResult = Attack();
-		shotDelay = new WaitForSeconds(stats.shotDelay);
 
 		ammoMagazineCurrent = stats.ammoMagazineCurrent;
 		ammoMagazineMax = stats.ammoMagazineMax;
@@ -48,10 +44,10 @@ public class Weapon : MonoBehaviour
 		do
 		{
 			AttackOnce();
-			yield return shotDelay;
+			yield return new WaitForSeconds(stats.shotDelay);
 		}
 		while (ammoMagazineCurrent != 0 && stats.isAuto);
-		
+		attackRoutine = null;
 	}
 
 	private void AttackOnce()
@@ -65,18 +61,18 @@ public class Weapon : MonoBehaviour
 
 		ammoMagazineCurrent = (ammoMagazineCurrent > 0) ? ammoMagazineCurrent-- : ammoMagazineCurrent;
 		ammoTotal = (ammoTotal > 0) ? ammoTotal-- : ammoTotal;
-		aSource.PlayOneShot(stats.attackSound);
+		soundManager.PlayEffect(stats.attackSound, transform, 0.1f);
 		lastShotTime = Time.time;
 	}
 
 	public void StartAttacking()
 	{
-		attackResult = Attack();
-		StartCoroutine(attackResult);
+		attackRoutine = StartCoroutine(Attack());
 	}
 	
 	public void StopAttacking()
 	{
-		StopCoroutine(attackResult);
+		StopCoroutine(attackRoutine);
+		attackRoutine = null;
 	}
 }

@@ -20,12 +20,6 @@ public class PlayerMovementController : MonoBehaviour
 	[SerializeField] private bool mirroredRotation = false;
 	[SerializeField] private float turnSpeed = 3.0f;
 
-	public WeaponStats mainWeaponStats;
-	private Weapon mainArmWeapon;
-
-	public Transform rightHandWeaponPos;
-	public Transform leftHandWeaponPos;
-
 
 	private Vector3 targetForward;
     private InputAction moveAction;
@@ -78,7 +72,6 @@ public class PlayerMovementController : MonoBehaviour
 		{
 			Vector2 movementInput = moveAction.ReadValue<Vector2>();
 			Move(movementInput, isRuning);
-
 		}
 	}
 	public void LookAt(Vector3 forward)

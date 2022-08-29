@@ -15,10 +15,12 @@ public class PlayerWeaponsController : MonoBehaviour
 	public Transform leftHandWeaponPos;
 
 	private PlayerInput playerInput;
+	private SoundManager soundManager;
 
 	[Inject] private void Construct(DiContainer diContainer)
 	{
 		playerInput = diContainer.Resolve<PlayerInput>();
+		soundManager = diContainer.Resolve<SoundManager>();
 	}
 
 	private void Start()
@@ -32,16 +34,19 @@ public class PlayerWeaponsController : MonoBehaviour
 
 		if (mainWeaponStats != null)
 		{
+			//todo: di factory
 			mainArmWeapon = Instantiate(mainWeaponStats.prefab, rightHandWeaponPos).GetComponent<Weapon>();
+			mainArmWeapon.soundManager = soundManager;
 		}
 	}
 
-    private void FireAction_canceled(InputAction.CallbackContext obj)
-    {
+
+    private void FireAction_performed(InputAction.CallbackContext obj)
+	{
 		if (mainArmWeapon) mainArmWeapon.StartAttacking();
 	}
 
-    private void FireAction_performed(InputAction.CallbackContext obj)
+	private void FireAction_canceled(InputAction.CallbackContext obj)
 	{
 		if (mainArmWeapon) mainArmWeapon.StopAttacking();
 	}
